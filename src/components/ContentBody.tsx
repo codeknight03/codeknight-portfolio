@@ -1,5 +1,5 @@
 import { SliceZone } from "@prismicio/react";
-import { Content } from "@prismicio/client";
+import { Content, isFilled } from "@prismicio/client";
 
 import { components } from "@/slices";
 import Heading from "@/components/Heading";
@@ -25,7 +25,7 @@ export default function ContentBody({
                             </span>
                         ))}
                     </div>
-                    <Button label={page.data.go_to_label} linkField={page.data.project_link} />
+                    {(isFilled.keyText(page.data.go_to_label) && isFilled.link(page.data.project_link)) && (<Button label={page.data.go_to_label} linkField={page.data.project_link} />)}
                 </div>
                 <p className="mt-8 border-b border-slate-600 text-xl font-medium text-slate-300">
                     {formattedDate}
