@@ -13,6 +13,10 @@ export default function ContentBody({
     page: Content.BlogPostDocument | Content.ProjectDocument;
 }) {
     const formattedDate = formatDate(page.data.date);
+
+    // Check if page is of type ProjectDocument
+    const isProjectDocument = (page as Content.ProjectDocument).tags !== undefined;
+
     return (
         <Bounded as="article">
             <div className="rounded-2xl border-2 border-slate-800 bg-slate-900 px-4 py-10 md:px-8 md:py-20">
@@ -25,7 +29,10 @@ export default function ContentBody({
                             </span>
                         ))}
                     </div>
-                    {(isFilled.keyText(page.data.go_to_label) && isFilled.link(page.data.project_link)) && (<Button label={page.data.go_to_label} linkField={page.data.project_link} />)}
+                    {/* Check if page is of type ProjectDocument before accessing go_to_label */}
+                    {isProjectDocument && isFilled.keyText(page.data.go_to_label) && isFilled.link(page.data.project_link) && (
+                        <Button label={page.data.go_to_label} linkField={page.data.project_link} />
+                    )}
                 </div>
                 <p className="mt-8 border-b border-slate-600 text-xl font-medium text-slate-300">
                     {formattedDate}
@@ -37,3 +44,4 @@ export default function ContentBody({
         </Bounded>
     );
 }
+
